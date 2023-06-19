@@ -46,25 +46,13 @@ During Speech Recognition and Language understanding the given
 data will undergo some process that what makes a machine can understand 
 Now how machine can understand the given data
 
-
-9597655277
-
-
 What we have chosen is Tries 
 Tries are a specific kind of tree that can be used to store and retrieve words in a dictionary, it's very optimized for prefix-based operations.
-
 Trie can also be usefull for developing NLP model because a computer does know human language. Therefore, we need to separate a sentence into words then encode them so we can fit it into our NLP model.	
 
 
 
-
-
-
 Given an array of strings str[] and a string key, the task is to check if the spelling of the key is correct or not. If found to be true, then print “YES”. Otherwise, print the suggested correct spellings.
-
-
-
-
 
 class TrieNode:
     def __init__(self):
