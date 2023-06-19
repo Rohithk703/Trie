@@ -1,0 +1,197 @@
+NLP
+Natural Language processing 
+commonly used to give words to a machine basically its all about how a machine can understand the human language
+It is also about how the computer can able to  understand the contents in the files(text files)
+
+
+Natural language processing (NLP) refers to the branch of computer science—and more specifically, the branch of artificial intelligence or AI—concerned with giving computers the ability to understand text and spoken words in much the same way human beings can.
+
+
+
+Let’s suppose that you have to write an autocomplete algorithm. For example, you enter the prefix “car” and the algorithm must return all the stored complete words that have the “car” prefix.
+
+
+Applications of NLP in real life examples:
+1. Auto fill and spell checking
+2. Plagarism checking
+3. Speech Recognition
+4. Sentimental analysis
+5. Machine Translation 
+6. Keyword Search
+7. extracting information
+9.Some chatbots like customer service chatbots
+
+
+Challenges in natural language processing frequently involve  
+
+1. Language understanding
+2. Language genaration
+
+Ambiguties inn Language understanding
+Lexical Ambiguity
+
+Same words having diffrent meanings 
+She is looking for a match.
+The fisherman went to the bank.
+
+Syntactic Ambiguity
+Sentences have more meanings also known as structural ambiguity
+The chicken is ready to eat.
+Visiting relatives can be boring.
+I saw the man with the binoculars.
+
+Referential Ambiguity
+
+During Speech Recognition and Language understanding the given 
+data will undergo some process that what makes a machine can understand 
+Now how machine can understand the given data
+
+
+9597655277
+
+
+What we have chosen is Tries 
+Tries are a specific kind of tree that can be used to store and retrieve words in a dictionary, it's very optimized for prefix-based operations.
+
+Trie can also be usefull for developing NLP model because a computer does know human language. Therefore, we need to separate a sentence into words then encode them so we can fit it into our NLP model.	
+
+
+
+
+
+
+Given an array of strings str[] and a string key, the task is to check if the spelling of the key is correct or not. If found to be true, then print “YES”. Otherwise, print the suggested correct spellings.
+
+
+
+
+
+class TrieNode:
+    def __init__(self):
+        self.children = {}
+        self.last = False
+
+class Trie:
+    def __init__(self):
+        self.root = TrieNode()
+        self.word_list = []
+
+    def insert(self, word):
+        node = self.root
+        for a in list(word):
+            if not node.children.get(a):
+                node.children[a] = TrieNode()
+            node = node.children[a]
+        node.last = True
+
+    def search(self, node, string):
+        if node.last:
+            self.word_list.append(string)
+
+        for a, n in node.children.items():
+            self.search(n, string + a)
+
+    def autocomplete(self, word):
+        node = self.root
+        for a in list(word):
+            if not node.children.get(a):
+                return []
+            node = node.children[a]
+        self.word_list = []
+        self.search(node, word)
+        return self.word_list
+
+
+trie = Trie()
+words = ["hello", "world", "hey", "hi", "how", "are", "you"]
+for word in words:
+    trie.insert(word)
+
+prefix = "h"
+autocomplete_words = trie.autocomplete(prefix)
+print(autocomplete_words)  # Output: ['hello', 'hey', 'hi']
+
+
+
+class TrieNode:
+    def __init__(self):
+        self.word=False
+        self.children={}
+
+class Trie:
+    def __init__(self):
+        self.root=TrieNode()
+
+    def insert(self, word: str) -> None:
+        node=self.root
+        for char in word:
+            if char not in node.children:
+                node.children[char]=TrieNode()
+            node=node.children[char]
+        node.word=True
+
+    def search(self, word: str) -> bool:
+        node=self.root
+        for char in word:
+            if char not in node.children:
+                return False
+            node=node.children[char]
+        return node.word
+
+    def startsWith(self, prefix: str) -> bool:
+        node=self.root
+        for char in prefix:
+            if char not in node.children:
+                return False
+            node=node.children[char]
+        return True
+
+
+
+class TrieNode:
+    def __init__(self):
+        self.children = {}
+        self.is_word = False
+
+class SpellChecker:
+    def __init__(self):
+        self.root = TrieNode()
+
+    def load_words(self, word_list):
+        for word in word_list:
+            self.add_word(word)
+
+    def add_word(self, word):
+        node = self.root
+        for char in word:
+            if char not in node.children:
+                node.children[char] = TrieNode()
+            node = node.children[char]
+        node.is_word = True
+
+    def check_word(self, word):
+        node = self.root
+        for char in word:
+            if char not in node.children:
+                return False
+            node = node.children[char]
+        return node.is_word
+
+    def check_words(self, sentence):
+        words = sentence.split()
+        misspelled = []
+        for word in words:
+            if not self.check_word(word):
+                misspelled.append(word)
+        return misspelled
+We are given a Trie with a set of strings stored in it. Now the user types in a prefix of his search query, we need to give him all recommendations to auto-complete his query based on the strings stored in the Trie. We assume that the Trie stores past searches by the users.
+For example if the Trie store {“abc”, “abcd”, “aa”, “abbbaba”} and the User types in “ab” then he must be shown {“abc”, “abcd”, “abbbaba”}.
+
+
+spell_checker = SpellChecker()
+word_list = ["hello", "world", "hey", "hi", "how", "are", "you"]
+spell_checker.load_words(word_list)
+
+sentence = "Hello, how are yuo doing today?"
+misspelled_words = spell_checker.check_words(sentence)
+print(misspelled_words)  # Output: ['yuo']
